@@ -1,0 +1,10 @@
+#Not Started
+	Figure out what to even start with
+
+#Started
+	Work on todo list
+	Populate data/randomNouns.txt
+
+#Double Check
+
+#Done
