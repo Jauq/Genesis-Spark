@@ -1,2 +1,2 @@
 # thisisWhatever
-thisisWhatever is a turn based strategy game where everything is randomized.
+"Wit" is a turn based strategy rpg where everything is randomized.
