@@ -20,6 +20,8 @@ def genName(
 	syllCount = rand(2..3),
 	sym = false,
 	symChance = 0,
+	conDubChance = 8,
+	vowDubChance - 4,
 	conWt = [],
 	vowWt = []
 	)
@@ -80,7 +82,7 @@ end
 loop do
 	b = gets.chomp.to_s
 	if b == ""
-		puts genName(rand(2..3), false, 0, [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1])
+		puts genName(rand(2..3), false, 0, 8, 4, [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1])
 	else
 		break
 	end
