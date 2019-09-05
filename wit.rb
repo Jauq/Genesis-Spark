@@ -19,11 +19,32 @@ gets.chomp
 def genName(
 	syllCount = rand(2..3),
 	sym = false,
+	symChance = 0,
 	conWt = [],
 	vowWt = []
 	)
-	
+
 	temp = {}
+
+	temp[:cons] = ["b", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "r", "s", "t", "v", "w", "y", "z"] #18 consonants
+	temp[:consNew] = []
+
+	if conWt != []
+		if conWt.count == temp[:cons].count
+			conWt.count.times do |z|
+				conWt[z].times do |z2|
+					temp[:consNew].push(temp[:cons][z])
+				end
+			end
+		else
+			temp[:consNew] = temp[:cons]
+		end
+	else
+		temp[:consNew] = temp[:cons]
+	end
+
+	temp[:vows] = ["a", "e", "i", "o", "u"] #5 vowels
+	
 	temp[:rand] = rand(0..1)
 	temp[:syll] = syllCount
 	temp[:build] = []
@@ -50,7 +71,7 @@ def genName(
 		temp[:build].push("con")
 	end
 	
-	return temp[:build]
+	return [temp[:build], temp[:consNew]]
 	
 	#content here
 
@@ -59,7 +80,7 @@ end
 loop do
 	b = gets.chomp.to_s
 	if b == ""
-		puts genName
+		puts genName(rand(2..3), false, 0, [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1])
 	else
 		break
 	end
