@@ -98,81 +98,39 @@ def genName(
 		if temp[:build][0] == "con" #is next item in temp[:build] a consonant
 			temp[:rand] = rand(1..conDubChance)
 			if conDubChance != 0 and temp[:rand] == 1 #will this consonant be a double consonant
-				if temp[:symWas] #was there previously a symbol, if yes capitalize
-					temp[:symWas] = false
-					temp[:name] += temp[:consNew].sample.capitalize
-				else
-					temp[:name] += temp[:consNew].sample
-				end
+				genNamePlaceLetter(temp, "con") #definition that places a letter into the name
 				temp[:rand] = rand(1..symChance[0])
-				if symChance[0] != 0 and temp[:rand] == 1 and temp[:symCount] < symCount and not temp[:build].count == temp[:buildMax] and not temp[:build].count <= 1
+				if symChance[0] != 0 and temp[:rand] == 1 and temp[:symCount] < symCount and not temp[:build].count == temp[:buildMax] and not temp[:build].count <= 2
 					#only activate if symbols are allowed, the symbol chance struck, there is less than the allowed amount of symbols,
 					#and this section is not the first or the last one.
-					temp[:name] += "'" #adds symbol
-					temp[:symCount] += 1
-					temp[:symWas] = true
-					temp[:build].shift #need to remove two sections (a vow and con) because this symbol creates a new syllable
-					temp[:build].shift
+					genNamePlaceSym(temp, "'", true) #definition that places a symbol into the name
 				end
-				if temp[:symWas]
-					temp[:symWas] = false
-					temp[:name] += temp[:consNew].sample.capitalize
-				else
-					temp[:name] += temp[:consNew].sample
-				end
+				genNamePlaceLetter(temp, "con")
 			else #if this is not a double consonant
 				temp[:rand] = rand(1..symChance[1])
-				if symChance[1] != 0 and temp[:rand] == 1 and temp[:symCount] < symCount and not temp[:build].count == temp[:buildMax] and not temp[:build].count <= 1
+				if symChance[1] != 0 and temp[:rand] == 1 and temp[:symCount] < symCount and not temp[:build].count == temp[:buildMax] and not temp[:build].count <= 2
 					#symbol chance but for not double consonant
-					temp[:name] += "-"
-					temp[:symCount] += 1
-					temp[:symWas] = true
+					genNamePlaceSym(temp, "-")
 				else
-					if temp[:symWas]
-						temp[:symWas] = false
-						temp[:name] += temp[:consNew].sample.capitalize
-					else
-						temp[:name] += temp[:consNew].sample
-					end
+					genNamePlaceLetter(temp, "con")
 				end
 			end
 			temp[:build].shift #removes the section in build so we can make a finite name
 		elsif temp[:build][0] == "vow" #same as consonant but for vowel sections
 			temp[:rand] = rand(1..vowDubChance)
 			if vowDubChance != 0 and temp[:rand] == 1
-				if temp[:symWas]
-					temp[:symWas] = false
-					temp[:name] += temp[:vowsNew].sample.capitalize
-				else
-					temp[:name] += temp[:vowsNew].sample
-				end
+				genNamePlaceLetter(temp, "vow")
 				temp[:rand] = rand(1..symChance[1])
-				if symChance[1] != 0 and temp[:rand] == 1 and temp[:symCount] < symCount and not temp[:build].count == temp[:buildMax] and not temp[:build].count <= 1
-					temp[:name] += "-"
-					temp[:symCount] += 1
-					temp[:symWas] = true
-					temp[:build].shift
-					temp[:build].shift
+				if symChance[1] != 0 and temp[:rand] == 1 and temp[:symCount] < symCount and not temp[:build].count == temp[:buildMax] and not temp[:build].count <= 2
+					genNamePlaceSym(temp, "-", true)
 				end
-				if temp[:symWas]
-					temp[:symWas] = false
-					temp[:name] += temp[:vowsNew].sample.capitalize
-				else
-					temp[:name] += temp[:vowsNew].sample
-				end
+				genNamePlaceLetter(temp, "vow")
 			else
 				temp[:rand] = rand(1..symChance[0])
-				if symChance[0] != 0 and temp[:rand] == 1 and temp[:symCount] < symCount and not temp[:build].count == temp[:buildMax] and not temp[:build].count <= 1
-					temp[:name] += "'"
-					temp[:symCount] += 1
-					temp[:symWas] = true
+				if symChance[0] != 0 and temp[:rand] == 1 and temp[:symCount] < symCount and not temp[:build].count == temp[:buildMax] and not temp[:build].count <= 2
+					genNamePlaceSym(temp, "'")
 				else
-					if temp[:symWas]
-						temp[:symWas] = false
-						temp[:name] += temp[:vowsNew].sample.capitalize
-					else
-						temp[:name] += temp[:vowsNew].sample
-					end
+					genNamePlaceLetter(temp, "vow")
 				end
 			end
 			temp[:build].shift
@@ -184,21 +142,40 @@ def genName(
 
 end
 
-#temporary test of def genName
-=begin
-b = ""
-while b == ""
-	puts genName(rand(2..3), [10, 10], 1, 0, 4, [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1])
-	b = gets.chomp.to_s
+def genNamePlaceSym(temp, sym, shiftIt = false)
+	temp[:name] += sym #adds symbol
+	temp[:symCount] += 1
+	temp[:symWas] = true
+	if shiftIt #need to remove two sections (a vow and con) because this specific symbol creates a new syllable
+		temp[:build].shift
+		temp[:build].shift
+	end
 end
-=end
 
+def genNamePlaceLetter(temp, type)
+	if type == "con"
+		if temp[:symWas] #was there previously a symbol, if yes capitalize
+			temp[:symWas] = false
+			temp[:name] += temp[:consNew].sample.capitalize
+		else
+			temp[:name] += temp[:consNew].sample
+		end
+	elsif type == "vow"
+		if temp[:symWas]
+			temp[:symWas] = false
+			temp[:name] += temp[:vowsNew].sample.capitalize
+		else
+			temp[:name] += temp[:vowsNew].sample
+		end
+	end
+end
+
+#temporary test of def genName
 loop do
 	b = gets.chomp.to_s
 	if b == ""
 		puts genName(rand(2..3), [10, 10], 1, 0, 4, [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1])
 	else
 		break
-		puts "I was wrong!"
 	end
 end
