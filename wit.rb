@@ -136,7 +136,7 @@ def genName(
 					end
 				end
 			end
-			temp[:build].shift #remove the section in build so we can make a finite name
+			temp[:build].shift #removes the section in build so we can make a finite name
 		elsif temp[:build][0] == "vow" #same as consonant but for vowel sections
 			temp[:rand] = rand(1..vowDubChance)
 			if vowDubChance != 0 and temp[:rand] == 1
