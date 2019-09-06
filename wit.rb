@@ -185,11 +185,20 @@ def genName(
 end
 
 #temporary test of def genName
+=begin
+b = ""
+while b == ""
+	puts genName(rand(2..3), [10, 10], 1, 0, 4, [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1])
+	b = gets.chomp.to_s
+end
+=end
+
 loop do
 	b = gets.chomp.to_s
 	if b == ""
 		puts genName(rand(2..3), [10, 10], 1, 0, 4, [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1])
 	else
 		break
+		puts "I was wrong!"
 	end
 end
