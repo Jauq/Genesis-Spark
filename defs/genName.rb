@@ -155,19 +155,16 @@ def genNamePlaceSym(temp, sym, shiftIt = false)
 end
 
 def genNamePlaceLetter(temp, type)
+    a = nil
 	if type == "con"
-		if temp[:symWas] #was there previously a symbol, if yes capitalize
-			temp[:symWas] = false
-			temp[:name] += temp[:consNew].sample.capitalize
-		else
-			temp[:name] += temp[:consNew].sample
-		end
+		a = :consNew
 	elsif type == "vow"
-		if temp[:symWas]
-			temp[:symWas] = false
-			temp[:name] += temp[:vowsNew].sample.capitalize
-		else
-			temp[:name] += temp[:vowsNew].sample
-		end
-	end
+        a = :vowsNew
+    end
+    if temp[:symWas]
+        temp[:symWas] = false
+        temp[:name] += temp[a].sample.capitalize
+    else
+        temp[:name] += temp[a].sample
+    end
 end
