@@ -1,10 +1,12 @@
 #Not Started
 	Figure out what to even start with
+	Classes for: "Characters" "Countries" "Items"
 
 #Started
 	Work on todo list
 	Populate data/randomNouns.txt
 
 #Double Check
+	defs/genName.rb
 
 #Done
