@@ -9,11 +9,23 @@ a.each do |z|
 	require_relative "#{z}"
 end
 
+a = Dir.glob("classes/*.rb")
+
+print a
+puts ""
+
+a.each do |z|
+	require_relative "#{z}"
+end
+
+c = Country.new
+
 #temporary test of def genName
 loop do
 	b = gets.chomp.to_s
 	if b == ""
-		puts genName(rand(2..3), [10, 10], 1, 0, 4, [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1])
+		print genName(rand(2..3), [10, 10], 1, 0, 4, [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1], 2)
+		#print "#{c.get(1, :vowWt, false)} "
 	else
 		break
 	end

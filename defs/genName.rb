@@ -1,16 +1,17 @@
 #here is a template for genName, just to make manual weight distribution easier
-#genName(rand(2..3), [0, 0], 1, 0, 4, [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1])
+#genName(rand(2..3), [0, 0], 1, 0, 4, [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1], 0)
 
-@genName = {}
-@genName[:cons] = ["b", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "r", "s", "t", "v", "w", "y", "z", "ch", "sh", "th"] #21 consonants (note the absence of c, q and x, as well as the addition of ch, sh and th)
-@genName[:vows] = ["a", "e", "i", "o", "u"] #5 vowels
-
-def genNameCons() #seemed useful, might delete later
-    return @genName[:cons]
+$genName = {
+	:cons => ["b", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "r", "s", "t", "v", "w", "y", "z", "ch", "sh", "th"], #21 consonants (note the absence of c, q and x, as well as the addition of ch, sh and th)
+	:vows => ["a", "e", "i", "o", "u"] #5 vowels
+}
+$genName[:voidConWt] = [] #adds a copy of the wt array where every entry is 0 (making generation impossible if this happens), just so I can detect it later and bypass the error
+$genName[:cons].count.times do |z|
+	$genName[:voidConWt].push(0)
 end
-
-def genNameVows() #same, same
-    return @genName[:vows]
+$genName[:voidVowWt] = []
+$genName[:vows].count.times do |z|
+	$genName[:voidVowWt].push(0)
 end
 
 #generates a completely random name
@@ -21,15 +22,16 @@ def genName(
 	conDubChance = 0, #the chance a consonant section will have two consonants, 1 out of n chance, set to 0 for no chance
 	vowDubChance = 4, #the chance a vowel section will have two vowels, 1 out of n chance, set to 0 for no chance
 	conWt = [], #optional weight array to increase the odds of any particular consonant, must match temp[:cons] in length otherwise it will be ignored
-	vowWt = [] #optional wight array to increase the odds of any particular vowel, must match temp[:vows] in length otherwise it will be ignored
+	vowWt = [], #optional wight array to increase the odds of any particular vowel, must match temp[:vows] in length otherwise it will be ignored
+	sylEnd = 0 #determines how the name will end, 0 = 50-50 con vow split, 1 = con end, 2 = vow end
 	)
 
 	temp = {}
 
-	temp[:cons] = @genName[:cons]
+	temp[:cons] = $genName[:cons]
 	temp[:consNew] = [] #the actual array being used in the code, will fill out after adding weighted consonants
 
-	if conWt != []
+	if conWt != [] and conWt != $genName[:voidConWt]
 		if conWt.count == temp[:cons].count
 			conWt.count.times do |z|
 				conWt[z].times do |z2|
@@ -43,10 +45,10 @@ def genName(
 		temp[:consNew] = temp[:cons]
 	end
 	
-	temp[:vows] = @genName[:vows]
+	temp[:vows] = $genName[:vows]
 	temp[:vowsNew] = [] #the actual array being used in the code, will fill out after adding weighted vowels
 	
-	if vowWt != []
+	if vowWt != [] and vowWt != $genName[:voidVowWt]
 		if vowWt.count == temp[:vows].count
 			vowWt.count.times do |z|
 				vowWt[z].times do |z2|
@@ -82,7 +84,7 @@ def genName(
 	
 	temp[:rand] = rand(0..1)
 	
-	if temp[:rand] == 1
+	if (temp[:rand] == 1 and sylEnd == 0) or sylEnd == 1
 		temp[:build].push("con")
 	end
 	
