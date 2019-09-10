@@ -20,24 +20,24 @@ getManyFiles(
 
 $game = {}
 
-def anyOfTheseInput(input, allows)
-	if allows.include?(input)
-		return true
-	else
-		return false
-	end
+def inp(input, allows)
+	return allows.include?(input)
 end
 
 loop do
 
-	print "[]>>"
+	print "[     ]>>"
 	input = gets.chomp.downcase.split(' ')
 
 	if input.count > 0
 
-		if anyOfTheseInput(input[0], ["end", "stop", "e"])
+		if inp(input[0], ["end", "stop", "e"])
 
 			break
+
+		elsif inp(input[0], ["clear", "c"])
+
+			system "cls"
 
 		else
 
