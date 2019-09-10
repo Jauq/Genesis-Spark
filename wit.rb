@@ -1,32 +1,50 @@
-#grabs all .rb files in the folder named "defs"
-a = Dir.glob("defs/*.rb")
+def getFiles(folder)
+	a = Dir.glob("#{folder}/*.rb")
+	print a
+	puts ""
 
-print a
-puts ""
-
-#requires the code for files in the variable "a" so that we can use all of their definitions and classes
-a.each do |z|
-	require_relative "#{z}"
-end
-
-a = Dir.glob("classes/*.rb")
-
-print a
-puts ""
-
-a.each do |z|
-	require_relative "#{z}"
-end
-
-c = Country.new
-
-#temporary test of def genName
-loop do
-	b = gets.chomp.to_s
-	if b == ""
-		print genName(rand(2..3), [10, 10], 1, 0, 4, [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1], 2)
-		#print "#{c.get(1, :vowWt, false)} "
-	else
-		break
+	a.each do |z|
+		require_relative "#{z}"
 	end
+end
+
+def getManyFiles(folderArray)
+	folderArray.each do |x|
+		getFiles(x)
+	end
+end
+
+getManyFiles(
+	["defs", "classes"]
+)
+
+$game = {}
+
+def anyOfTheseInput(input, allows)
+	if allows.include?(input)
+		return true
+	else
+		return false
+	end
+end
+
+loop do
+
+	print "[]>>"
+	input = gets.chomp.downcase.split(' ')
+
+	if input.count > 0
+
+		if anyOfTheseInput(input[0], ["end", "stop", "e"])
+
+			break
+
+		else
+
+			puts "[Error] No Such Command Error."
+
+		end
+
+	end
+
 end
