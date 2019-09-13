@@ -39,6 +39,14 @@ loop do
 
 			system "cls"
 
+		elsif inp(input[0], ["ord"])
+
+			if input.count > 1
+				puts getOrdinal(input[1])
+			else
+				puts getOrdinal(rand(0..100))
+			end
+
 		else
 
 			puts "[Error] No Such Command Error."
