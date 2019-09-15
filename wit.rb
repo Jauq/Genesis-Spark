@@ -1,4 +1,4 @@
-def getFiles(folder)
+def getFiles(folder) #requires all ruby files in a folder within the relative directory
 	a = Dir.glob("#{folder}/*.rb")
 	print a
 	puts ""
@@ -8,7 +8,7 @@ def getFiles(folder)
 	end
 end
 
-def getManyFiles(folderArray)
+def getManyFiles(folderArray) #calls a getFiles for all folder names within the array
 	folderArray.each do |x|
 		getFiles(x)
 	end
@@ -18,7 +18,9 @@ getManyFiles(
 	["defs", "classes"]
 )
 
-$game = {}
+$game = {
+	:menu = 0
+}
 
 def inp(input, allows)
 	return allows.include?(input)
