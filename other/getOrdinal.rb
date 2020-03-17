@@ -1,4 +1,5 @@
-def getOrdinal(number = 0, capital = false) #returns the numbered-ordinal version of the int given as a string (lowercase unless capital is set to true)
+def getOrdinal(number = 0, upcase = false)
+	#returns the numbered-ordinal version of the int given as a string (lowercase unless upcase is set to true)
 
     ordinal = ""
 
@@ -35,8 +36,8 @@ def getOrdinal(number = 0, capital = false) #returns the numbered-ordinal versio
         end
     end
 
-    if capital
-        return ordinal.capitalize
+    if upcase
+        return ordinal.upcase
     else
         return ordinal
     end
